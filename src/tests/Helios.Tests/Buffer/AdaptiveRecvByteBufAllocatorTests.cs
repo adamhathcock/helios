@@ -1,20 +1,19 @@
 ﻿using Helios.Buffers;
-using NUnit.Framework;
+using Xunit;
 
 namespace Helios.Tests.Buffer
-{
-    [TestFixture]
+{    
     public class AdaptiveRecvByteBufAllocatorTests
     {
-        [Test]
+        [Fact]
         public void Should_initialize_default()
         {
             var def = AdaptiveRecvByteBufAllocator.Default;
             var handle = def.NewHandle();
-            Assert.AreEqual(1024, handle.Guess());
+            Assert.Equal(1024, handle.Guess());
         }
 
-        [Test]
+        [Fact]
         public void Should_initialize_new()
         {
             var min = 100;
@@ -24,7 +23,7 @@ namespace Helios.Tests.Buffer
             var def = new AdaptiveRecvByteBufAllocator(min, init, max);
             var handle = def.NewHandle();
 
-            Assert.AreEqual(init, handle.Guess());
+            Assert.Equal(init, handle.Guess());
         }
     }
 }

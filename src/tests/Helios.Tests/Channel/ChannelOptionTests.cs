@@ -1,13 +1,12 @@
 ﻿using System;
 using Helios.Channel;
-using NUnit.Framework;
+using Xunit;
 
 namespace Helios.Tests.Channel
 {
-    [TestFixture]
     public class ChannelOptionTests
     {
-        [Test]
+        [Fact]
         public void TestExists()
         {
             var name = "test";
@@ -18,7 +17,7 @@ namespace Helios.Tests.Channel
             Assert.NotNull(option);
         }
 
-        [Test]
+        [Fact]
         public void TestValueOf()
         {
             var name = "test1";
@@ -26,11 +25,10 @@ namespace Helios.Tests.Channel
             ChannelOption<string> option = ChannelOption.ValueOf(name);
             ChannelOption<string> option2 = ChannelOption.ValueOf(name);
 
-            Assert.AreSame(option, option2);
+            Assert.Same(option, option2);
         }
 
-        [ExpectedException(typeof(ArgumentException))]
-        [Test]
+        [Fact]
         public void TestCreateOrFail()
         {
             var name = "test2";
@@ -39,7 +37,7 @@ namespace Helios.Tests.Channel
             Assert.True(ChannelOption.Exists(name));
             Assert.NotNull(option);
 
-            ChannelOption.NewInstance<string>(name);
+            Assert.Throws<ArgumentException>(()=> ChannelOption.NewInstance<string>(name));
         }
     }
 }

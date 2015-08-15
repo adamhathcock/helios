@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Timers;
+using System.Threading;
 
 namespace Helios.Util.TimedOps
 {
@@ -40,8 +40,7 @@ namespace Helios.Util.TimedOps
         public void Cancel()
         {
             if (SetTimer == null || !IsScheduled) return;
-            SetTimer.Stop();
-            SetTimer.Elapsed -= SetTimerOnElapsed;
+            SetTimer.Dispose();
             IsScheduled = false;
         }
 
@@ -51,15 +50,12 @@ namespace Helios.Util.TimedOps
 
             if (SetTimer == null)
             {
-                SetTimer = new Timer();
+                SetTimer = new Timer(new TimerCallback(SetTimerOnElapsed), null, 0, (int)Math.Max(timeToSet.TotalMilliseconds, 1));
             }
             IsScheduled = true;
-            SetTimer.Interval = Math.Max(timeToSet.TotalMilliseconds,1);
-            SetTimer.Enabled = true;
-            SetTimer.Elapsed += SetTimerOnElapsed;
         }
 
-        private void SetTimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
+        private void SetTimerOnElapsed(object sender)
         {
             Value = FutureValue;
             WasSet = true;

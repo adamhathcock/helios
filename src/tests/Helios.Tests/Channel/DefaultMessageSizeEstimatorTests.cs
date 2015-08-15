@@ -1,15 +1,14 @@
 ﻿using Helios.Channel;
-using NUnit.Framework;
+using Xunit;
 using System;
 
 namespace Helios.Tests.Channel
 {
-    [TestFixture]
     public class DefaultMessageSizeEstimatorTests
     {
         private readonly string MessageSizeEstimatorName = "MESSAGE_SIZE_ESTIMATOR";
 
-        [Test]
+        [Fact]
         public void DefaultMessageSizeEstimator_should_exist_channel_option()
         {
             Assert.True(ChannelOption.Exists(MessageSizeEstimatorName));
@@ -19,16 +18,16 @@ namespace Helios.Tests.Channel
             Assert.NotNull(option);
         }
 
-        [Test]
+        [Fact]
         public void DefaultMessageSizeEstimator_should_properly_initialize()
         {
             var mse = new DefaultMessageSizeEstimator(0);
             var handle = mse.NewHandle();
             var handle2 = mse.NewHandle();
-            Assert.AreEqual(handle, handle2);
+            Assert.Equal(handle, handle2);
         }
 
-        [Test]
+        [Fact]
         public void DefaultMessageSizeEstimator_should_fail_initialization()
         {
             Assert.Throws<ArgumentOutOfRangeException>(
@@ -38,15 +37,15 @@ namespace Helios.Tests.Channel
                 delegate { var mse = new DefaultMessageSizeEstimator(-500); });
         }
 
-        [Test]
+        [Fact]
         public void DefaultMessageSizeEstimator_should_return_unknown_size()
         {
             var unknownSize = 100;
 
             var mse = new DefaultMessageSizeEstimator(unknownSize);
 
-            Assert.AreEqual(unknownSize, mse.NewHandle().Size(null));
-            Assert.AreEqual(unknownSize, mse.NewHandle().Size(1));
+            Assert.Equal(unknownSize, mse.NewHandle().Size(null));
+            Assert.Equal(unknownSize, mse.NewHandle().Size(1));
         }
     }
 }

@@ -5,11 +5,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Helios.Util.TimedOps;
-using NUnit.Framework;
+using Xunit;
 
 namespace Helios.Tests.Util.TimedOps
 {
-    [TestFixture]
     public class DeadlineTests
     {
         #region Setup / Teardown
@@ -17,7 +16,7 @@ namespace Helios.Tests.Util.TimedOps
 
         #region Tests
 
-        [Test]
+        [Fact]
         public void Deadlines_with_same_values_should_be_equal()
         {
             var deadline1 = Deadline.Now;
@@ -25,7 +24,7 @@ namespace Helios.Tests.Util.TimedOps
             Assert.True(deadline1 == deadline2);
         }
 
-        [Test]
+        [Fact]
         public void Deadlines_should_be_hit_when_time_elapses()
         {
             var deadline1 = Deadline.Now + TimeSpan.FromSeconds(0.5);

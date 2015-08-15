@@ -1,19 +1,10 @@
 using Helios.Buffers;
-using NUnit.Framework;
 
 namespace Helios.Tests.Buffer
 {
-    [TestFixture]
-    public class UnpooledDirectByteBufferTests : ByteBufferTests
+    public interface IBufferFactory
     {
-        protected override IByteBuf GetBuffer(int initialCapacity)
-        {
-            return UnpooledByteBufAllocator.Default.Buffer(initialCapacity);
-        }
-
-        protected override IByteBuf GetBuffer(int initialCapacity, int maxCapacity)
-        {
-            return UnpooledByteBufAllocator.Default.Buffer(initialCapacity, maxCapacity);
-        }
+        IByteBuf GetBuffer(int initialCapacity);
+        IByteBuf GetBuffer(int initialCapacity, int maxCapacity);
     }
 }

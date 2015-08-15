@@ -441,7 +441,7 @@ namespace Helios.Concurrency
             internal void ForceTermination()
             {
                 //TODO: abort is no guarantee for thread abortion
-                _thread.Abort();
+                //_thread.Abort();
             }
         }
 
